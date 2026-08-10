@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<HTML>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+        .zaid {
+            height: 100vh;
+            width: 100vw;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 30px;
+          
+        }
+        #zid{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: -20px;
+        }
+        #zid h1{
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .z{color: blue; font-size: 68px;margin: 0;}
+        .a{color:  red;  font-size: 62px;margin: 0;}
+        .i{color: orange;  font-size: 60px;margin: 0;}
+        .d{color: green;  font-size: 66px;margin: 0;}
+        .n{color: blue;  font-size: 68px;margin: 0;}
+        .o{color: yellow;  font-size: 62px;margin: 0;}
+        .oo{color: purple;  font-size: 60px;margin: 0;}
+        .r{color: orange;  font-size: 66px;margin: 0;}
+
+        
+
+
+        .SEARCH{
+            display: flex;
+            align-items: center;
+            width: 580px;
+            max-width: 90vw;
+            height: 46px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+            border-radius: 24px;
+            padding: 0 16px;
+            border: 1px solid transparent;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .SEARCH:hover,
+        .SEARCH:focus-within {
+            background-color: #ffffff;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+        }
+
+        .SEARCH input{
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 16px;
+            color: #202124;
+            font-family: Arial, sans-serif;
+            margin-left: 10px;
+        }
+        .SEARCH input::placeholder{
+            color: #5f6368;
+        }
+
+        .right-icon{
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-left: 10px;
+        }
+        .mic-icon{
+            color: #4285f4;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .camera-icon{
+            color: #ea4335;
+            font-size: 18px;
+            cursor:pointer;
+        }
+        .add{
+        order: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        flex-direction: column;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        width: 112px;
+        height: 112px;
+
+       }
+       .add:hover{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background-color: #e3e5e8;
+        width: 60px;
+        height: 70px;
+        cursor: pointer;
+        width: 112px;
+        height: 112px;
+        
+       }
+       .add:label{
+        font-size: 12px;
+        color: #3c4043;
+        font-family: Arial, sans-serif;
+       }
+       #add{
+        font-weight: bolder;
+        font-size: 30px;
+
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f1f3f4;
+        cursor: pointer;
+       }
+
+       .search-icon{
+        font-size: 15px;
+        color: black;
+        margin-right: 12px;
+       }
+       .addShortcut{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.06);
+        z-index: 1000;
+       }
+       
+       .sho{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #ffffff;
+        width: 501px;
+        max-width: 90vw;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        z-index: 111111;
+        gap: 15px
+       }
+       .sho h1{
+        margin: 0 0 20px 0;
+        font-size: 20px;
+        font-weight: 500;
+        color: #1f1f1f;
+        text-align: left;
+       }
+       .inputF{ 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 16px;
+        text-align: left; 
+        }
+        .inputF label{
+            font-size: 12px;
+            font-weight: 600;
+            color: #0b57d0;
+            margin-bottom: 6px;
+        }
+        .inputF input{
+            width: 200%;
+            height: 30px;
+            background-color: #e9eef6;
+            border: none;
+            border-bottom: 2px solid #0b57d0;
+            border-radius: 14px;
+            outline: none;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
+        .btn-grp{
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .btn-cancel, .btn-done,  .btn-donee{
+            height: 36px;
+            padding: 0 20px;
+            border-radius: 18px;
+            box-shadow: 0 5px 10px grey;
+            font-size: 14px;
+            font-weight: bolder;
+            border: none;
+            transition: background-color 0.2s;
+        }
+        .btn-cancel{
+            background-color: transparent;
+            color: #ea4335;
+            cursor: pointer;
+        }
+        .btn-done{
+            background-color: #e9eef6;
+            color:#0b57d0;
+        }
+
+        .btn-donee{
+            background-color: #0b57d0;
+            color: white;
+        }
+        .btn-donee:hover{
+            background-color: #0b57d0;
+            color: white;
+            cursor: pointer;
+        }
+        .shortcutNEWW{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .shortcut-cardss{
+        position: relative;
+         color: #333;   
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border-radius: 12px;
+         flex-direction: column;
+         cursor: pointer;
+         transition: background-color 0.2s ease;
+         width: 112px;
+         height: 112px;
+         text-decoration: none;
+        }
+        .three-dot{
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #333;
+            cursor: pointer;
+            display: none;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+        .three-dot:hover{
+            background-color: rgba(0,0,0,0.15);
+        }
+        .shortcut-cardss:hover .three-dot{
+         display: block;
+       }
+       .shortcut-cardss:hover {
+        background-color:  #e9eef6;
+       }
+       .shortcut-cardss .icon-boxx{
+        margin: 8px;
+        font-weight: bolder;
+        font-size: 30px;
+
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f1f3f4;
+        cursor: pointer;
+       }
+       .shorimg{
+        width: 24px;
+        height: 24px
+       }
+       
+       .shotcut-title{
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+        overflow:hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+       }
+    
+       .signnn{
+        width: 60px;
+        height: 60px;
+       }
+       .boy-poin{
+        width: 525px;
+        height: 250px;
+        object-fit: fill;
+
+        display: block;
+        filter: brightness(1.05);
+        border-radius: 50px;
+       }
+       .video-con{
+        position: relative;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+       }
+       .logo{
+        display: flex;
+        align-items: center;
+       }
+       .search-result-here{
+        display: none;
+        align-items: center;
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+        overflow-y:auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
+        -ms-overflw-style: none;
+       }
+       .search-result-here::-webkit-scrollbar{
+            display: none;
+        }       
+        .search-bar-here{
+        display: flex;
+        border-bottom: 0.5px solid #ccc;
+        width: 100vw;
+        height: 19vh;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 99;
+       }
+       .zaidimg{
+        width:200px;
+        height: 18vh;
+        object-fit: fill;
+        cursor: pointer;
+        margin-left: 40px;
+        margin-bottom: 2px;
+        margin-top:2px;
+       }
+       .SEARCH-here{
+            display: flex;
+            align-items: center;
+            width: 580px;
+            max-width: 90vw;
+            height: 46px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+            border-radius: 24px;
+            padding: 0 16px;
+            border: 1px solid transparent;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            margin-left: 50px;
+        }
+
+        .SEARCH-here:hover,
+        .SEARCH-here:focus-within {
+            background-color: #ffffff;
+            box-shadow: 0 2px 9px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+        }
+
+        .SEARCH-here input{
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 16px;
+            color: #202124;
+            font-family: Arial, sans-serif;
+            margin-left: 10px;
+        }
+        .SEARCH-here input::placeholder{
+            color: #5f6368;
+        }
+        .resultofAi{
+            width: 87vw;
+            height: 46vh;
+        }
+        .show-more{
+            width: 87vw;
+            height: 9.1vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+        }
+        #show-more{
+            margin-left: 25px;
+            border: 0.5px solid #00ddff;
+            border-radius: 25px;
+            width: 51vw;
+            height: 5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 1px 70px white;
+            
+        }
+        .ShoMore{
+            margin-right: 25px;
+            font-family: 'poppins', sans-serif;
+            font-size: 15px;
+            font-weight: bolder;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .arrow{
+            border: solid #00ddff;
+            border-width: 0 1.5px 1.5px 0;
+            display: inline-block;
+            padding: 4px;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+        .down{
+            transform: rotate(45deg);
+        }
+        .up{
+            transform: rotate(-135deg);
+            margin-bottom: -2px;
+        }
+        .AI_RESULT{
+            display: block;
+            border: 2px solid white;
+            width: 87vw;
+            height: 36vh;
+            overflow-y: hidden;
+            border-radius: 30px;
+            font-family: 'poppins', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: left;
+
+            margin-bottom: 10px;
+            font-weight: bold;
+            box-sizing: border-box;
+
+            -webkit-mask-image: linear-gradient(to bottom, white 30%, transparent 100%);
+            mask-image: linear-gradient(to bottom, white 30%, transparent 100%);
+        }
+        .linksss{
+            display: block;
+            margin-top: 5px;
+            width: 87vw;
+            height: auto;
+        }
+        .combo_ai_sow{
+            margin-top: 50px;
+        }
+      .brand_logo{
+        height: 350px;
+        width: 500px;
+        margin-bottom: -90px;
+      }
+      .id{
+        display: block;
+      }
+      .fire_gradients{
+        background: linear-gradient(to bottom, #00d2ff 0%, #003cc5 50%, #590fb7 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bolder;
+        font-size: 40px !important;
+        
+      }
+      .colofull_gradients{
+        background: linear-gradient(to bottom, #00d2ff 0%, #003cc5 50%, #590fb7 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bolder;
+        font-size: 30px !important;
+        
+      }
+    </style>
+    <head>
+        <TITLE style="font-weight: 900;">SUBIIZ</TITLE>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="icon" type="image/png" href="{{url_for('static', filename='SUBIIZ_LOGO.png') }}">
+    </head>
+    <body>
+
+        <div class="zaid"> 
+            <div id=zid>
+                <img src="FULLnameSUBIIZ.png" class="brand_logo">
+
+            </div>
+        
+         <div class="id">
+            <DIV class="SEARCH">
+
+                <!--Left Search Bar-->
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+                <!--Midle Input-->
+                <input type="text" onkeypress="triggerSearch(event)" placeholder="" id="serach_engine">
+
+                <!--right-->
+                <div class="right-icon">
+                    <i class="fa-solid fa-microphone mic-icon"></i>
+                    <i class="fa-solid fa-camera camera-icon"></i>
+                </div>
+            </DIV>
+
+         </div>
+
+
+         <div class="shortcutNEWW">
+            <div class="add" title="Add Shortcut" onclick="addShortcut()">
+                <div id="add">+</div>
+                <span class="label">Add Shortcut</span>
+            </div>
+         </div>
+        
+        
+
+        </div>
+        <div class="addShortcut">
+            <div class="sho">
+                <h1>Add Shortcut</h1>
+
+                <div class="inputF" >
+                  <label>WEBSITE NAME</label>
+                  <input type="text" id="inputA" autocapitalize="off" class="NAMENN" oninput="CHECKING()"  onkeydown="if(event.key === 'Enter')doneAA()">
+                </div>
+
+                <div class="inputF" >
+                    <label>URL</label>
+                    <input type="text" id="inputB" autocomplete="off" class="urlll" oninput="CHECKING()" onkeydown="if(event.key === 'Enter')doneAA()">
+                </div>
+
+                <div class="btn-grp">
+                    <button class="btn-cancel" onclick="closeAA()">CANCEL</button>
+                    <button class="btn-done" onclick="doneAA()">DONE</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!--SEARCH RESULT HERE-->
+        
+        <div class="search-result-here">
+            <div class="search-bar-here">
+                <img  src="FULLnameSUBIIZ.png" type="image/png" class="zaidimg" onclick="goHome()" title="GO TO HOME">
+
+                <DIV class="SEARCH-here">
+                    <!--Left Search Bar-->
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    
+                    <!--Midle Input-->
+                    <input type="text" onkeypress="triggerSearch(event)" placeholder="" id="serach_engine2">
+    
+                    <!--right-->
+                    <div class="right-icon">
+                        <i class="fa-solid fa-microphone mic-icon"></i>
+                        <i class="fa-solid fa-camera camera-icon"></i>
+                    </div>
+                </DIV>
+
+                <video autoplay loop muted playsinline class="poin" style="display: none;">
+                    <source src="subiizzz.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="resultofAi">
+                <!--RESULT OF AI-->
+                <div class="combo_ai_sow">
+                    <div class="AI_RESULT">
+
+                    </div>
+                    <!--SHOW MORE CONTENT-->
+                    <div class="show-more" onclick="toggleShowMore()">
+                        <div id="show-more">
+                            <span class="ShoMore">SHOW MORE</span>
+                            <a class="arrow down"></a>
+                        </div>
+    
+                    </div>
+
+                </div>
+               
+
+                <div class="linksss">
+
+                </div>
+
+            </div>
+        </div>
+
+    
+        
+    </body>
+    <script>
+        let inpttt = document.getElementById("serach_engine2");
+        let PLaceholder = "Search on Zaid";
+        let index = 0;
+        function typing(){
+
+            if(index < PLaceholder.length){
+                inpttt.placeholder += PLaceholder.charAt(index);
+                index++;
+                setTimeout(typing, 150);
+            }else{
+                setTimeout(()=>{
+                    inpttt.placeholder = "";
+                    index = 0;
+                    typing();
+                }, 2000);
+            }
+
+        }
+        typing();
+
+        let inppttt = document.getElementById("serach_engine");
+        let PLacehpolder = "Search on Zaid";
+        let indexp = 0;
+        function typing1(){
+
+            if(indexp < PLacehpolder.length){
+                inppttt.placeholder += PLacehpolder.charAt(indexp);
+                indexp++;
+                setTimeout(typing1, 150);
+            }else{
+                setTimeout(()=>{
+                    inppttt.placeholder = "";
+                    indexp = 0;
+                    typing1();
+                }, 2000);
+            }
+
+        }
+        typing1();
+        
+        function addShortcut(){
+            let dabbaADD = document.querySelector(".addShortcut");
+
+            dabbaADD.style.display = "flex";
+        }
+        function closeAA(){
+            let dabbahat = document.querySelector(".addShortcut");
+
+            dabbahat.style.display = "none";
+            document.querySelector(".NAMENN").value = "";
+            document.querySelector(".urlll").value = "";
+
+            CHECKING();
+        }
+        function CHECKING(){ 
+         let nameW = document.querySelector(".NAMENN").value.trim();
+         let urlW = document.querySelector(".urlll").value.trim();
+
+         if (nameW !== "" && urlW !== "" ){
+            let btnnddd = document.querySelector(".btn-done , .btn-donee");
+
+            btnnddd.className = "btn-donee";
+            
+         }
+
+         else{
+            let btnnddd = document.querySelector(".btn-done, .btn-donee");
+            btnnddd.className = "btn-done";
+         }
+        }       
+
+        function doneAA(){
+            let nameW = document.querySelector(".NAMENN").value.trim();
+            let urlW = document.querySelector(".urlll").value.trim();
+            let addDiv = document.querySelector(".addShortcut");
+
+
+            if(window.getComputedStyle(addDiv).display === "none") {
+                return;
+            }
+            if (nameW == "" && urlW == ""){return;}
+            if (!urlW.startsWith("http://") && !urlW.startsWith("https://")){
+                urlW = "https://" + urlW;
+
+            }
+            let googleAPI = `https://www.google.com/s2/favicons?domain=${urlW}&sz=64`;
+            let container = document.querySelector(".shortcutNEWW")
+
+            let shortcutsHTML = `
+            <a href="${urlW}" target="_self" class="shortcut-cardss" title="${nameW}">
+                <span class="three-dot" onclick="deleteShortcut(event, this)">&#8942;</span>
+                <div class="icon-boxx">
+                    <img src="${googleAPI}" alt="${nameW}" class="shorimg">
+                </div>
+                <span class="shotcut-title">${nameW}</span>
+            </a> 
+            `;
+            container.insertAdjacentHTML("beforeend", shortcutsHTML);
+            localStorage.setItem("myShortcutt", (localStorage.getItem("myShortcutt") || "")+ shortcutsHTML);
+            closeAA();
+        }
+        function deleteShortcut(e,btn){
+            e.preventDefault();
+
+            let card = btn.closest(".shortcut-cardss");
+            card.remove();
+
+            let reamingHTML = "";
+            document.querySelectorAll(".shortcut-cardss").forEach(c =>{
+                reamingHTML += c.outerHTML;
+            });
+            localStorage.setItem("myShortcutt", reamingHTML);
+
+        }
+        document.querySelector(".shortcutNEWW").insertAdjacentHTML("beforeend", localStorage.getItem("myShortcutt") || "");
+
+        async function triggerSearch(event){
+            if (event.key === 'Enter'){
+                let inppt = event.target.value.trim();
+
+                if(inppt !== ""){
+                    document.querySelector("#serach_engine").value = inppt;
+                    document.querySelector("#serach_engine2").value = inppt;
+                    document.querySelector(".zaid").style.display = "none";
+                    document.querySelector(".search-result-here").style.display = "flex";
+
+
+                    let linkBox = document.querySelector(".linksss");
+                    let aiBox = document.querySelector(".AI_RESULT");
+                    aiBox.innerHTML = `<span class="fire_gradients">Thinking..........</span>`;
+                    linkBox.innerHTML = `<h1 class="colofull_gradients">Finding Best Result..........</h1>`;
+                    try{
+                        let response = await fetch(`http://192.168.113.125:5000/search?q=${encodeURIComponent(inppt)}`);
+                        let data = await response.json();
+                        let AIresponse = await fetch(`http://192.168.113.125:5000/ai-response?q=${encodeURIComponent(inppt)}`)
+                        let AIdata = await AIresponse.json();
+
+                        linkBox.innerHTML = "";
+                        aiBox.innerHTML = "";
+
+                       if(data.results && data.results.length > 0){
+                        aiBox.innerHTML = `<div style="display: flex;flex-direction: row;justify-content: flex-start;white-space: nowrap; align-items: center; margin-left 0;">
+                            <h2 style="font-size: 15px; color: black; font-wight: bolder; display: block; padiing: 10px 20px 0 20px;margin-left: 20px;">SEARCH RESULT</h2>
+                            <span style="border: 0.5px solid #ccc;cursor:pointer;color:blue; height:22px;font-size: 11px; border-radius:25px;margin-left: 4px; margin-right: 4px; display: inline-flex; justify-content: center: align-items: center;box-sizing: border-box;padding: 0 10px;" onclick="toggle_eng_hindi()" id="toggle_eng_hindi"title="Speak To Eng And Hindi">English</span>
+                            <span onclick="speakAIResult()" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-left: 2px; vertical-align: middle;"class="speaker_icon" title="Listen"><svg width="22" height="22" viewBox="0 0 24 24" fill="#00d2ff"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></span>
+                            </div>
+                        <span style="font-size: 12px; color: #1a73e8; font-weight: 6000;margin-left: 24px">AI OVERVIEW / TOP RESULT</span>
+                        `;
+                        linkBox.innerHTML = `<h1 style="color: black; font-wight: bolder; display: block; padiing: 10px 20px 0 20px">SEARCH RESULT</h1>
+                        <h3 style="color: black; font-wight: bolder; display: block; padding: 10px 20px 0 20px">LINKSS</h3>
+                        `;
+                        if (AIdata && AIdata.Reply){
+                         aiBox.innerHTML += `<div style="margin-left:60px">${AIdata.Reply}</div>`;
+                        }
+                        
+                        
+                        data.results.forEach((item, index)=>{ 
+                            linkBox.innerHTML += `
+                            <div style="padding: 10px 20px;">
+                                <a href="${item.href}" target="_self" style="font-size: 20px; color: #1z0dab; font-weight: bolder; display: block;margin-bottom: 8px">
+                                    ${index + 1}. ${item.title || 'Result'}
+                                </a>
+                                <p style="color: #3c4043; margin-bottom: 5px; font-size: 14px;">${item.body}</p>
+                            </div>
+                            `;
+                        });
+                       }else{
+                        linkBox.innerHTML = `
+                        <div style="padding: 20px;">
+                            <H1 style="color: #d93025;margin: 0 0 8px 0;">NO ANSWER FOUND!!</H1>
+                            <H3>SEARCH ON GOOGLE &#8595</H3>
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+                        </div>
+                        `;
+                        aiBox.innerHTML = `
+                        <div style="padding: 20px;">
+                            <H1 style="color: #d93025;margin: 0 0 8px 0;">NO ANSWER FOUND!!</H1>
+                            <H3>SEARCH ON GOOGLE &#8595</H3>
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+                        </div>
+                        `;
+                       }
+
+                    } catch (err){
+                        linkBox.innerHTML = `
+                        <div style="padding: 20px;">
+                            <H1 style="color: #d93025;margin: 0 0 8px 0;">BACKEND ERROR<i style="font-size: 0px;">PLEASE ON THE PYTHON SERVER</i></H1>
+                            <H3>SEARCH ON GOOGLE &#8595</H3>
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+                        </div>
+                        `;
+                        aiBox.innerHTML = `
+                        <div style="padding: 20px;">
+                            <H1 style="color: #d93025;margin: 0 0 8px 0;">BACKEND ERROR <i style="font-size: 0px;">PLEASE ON THE PYTHON SERVER</i></H1>
+                            <H3>SEARCH ON GOOGLE &#8595</H3>
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+                        </div>
+                        `;
+                    }
+                    
+                }
+            }
+        }
+
+        function trackerActi(actionName, detailsObj){
+            fetch('/track',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: actionName,
+                    details: detailsObj
+                })
+            }).catch(err => console.log("TRACKING FAILED"));
+        }
+        trackerActi("Page_Loaded", {url: window.location.href});
+
+        document.addEventListener('click', (e) =>{
+            let link = e.target.closest('a');
+            if(link){
+                trackerActi("LINK_USER_OPEN",{
+                    TARGET_URL: link.href,
+                    TEXT: link.href
+
+                });
+            }
+            let donBT = document.querySelector(".btn-done");
+         
+            donBT.onclick  = () =>{
+                let inpA = document.getElementById("inputA").value;
+                let inpB = document.getElementById("inputB").value;
+                trackerActi("USER_CREATED_SHORTCUT",{
+                    SHORTCUT_NAME: inpA,
+                    SHORTCUT_LINK : inpB
+                });
+            };
+
+        });
+        
+
+       
+       
+        function goHome(){
+            document.querySelector(".search-result-here").style.display = "none";
+            document.querySelector(".zaid").style.display = "flex";
+            let aBox = document.querySelector(".AI_RESULT");
+            let linkBox = document.querySelector(".linksss");
+
+            aBox.innerHTML = "";
+            linkBox.innerHTML = "";
+
+        }
+        function toggleShowMore(){
+            let aiBox = document.querySelector(".AI_RESULT");
+            let btnText = document.querySelector(".ShoMore");
+            let btnArrow = document.querySelector(".arrow");
+
+            if (aiBox.style.height === "auto" || aiBox.style.height === "100%"){
+                aiBox.style.height = "36vh";
+                aiBox.style.webkitMaskImage =  "linear-gradient(to bottom, white 30%, transparent 100%)";
+                aiBox.style.maskImage = "linear-gradient(to bottom, white 30%, transparent 100%)";
+                btnText.innerText = "SHOW MORE";
+                btnArrow.className = "arrow down";
+            }else{
+                aiBox.style.height = "auto";
+                aiBox.style.webkitMaskImage =  "none";
+                aiBox.style.maskImage = "none";
+                btnText.innerText = "SHOW LESS";
+                btnArrow.className = "arrow up";
+            }
+        }
+        let currentLang = 'en';
+
+        function toggle_eng_hindi(){
+            const langbtn = document.querySelector("#toggle_eng_hindi");
+            if (!langbtn) return;
+
+            if (currentLang === 'en'){
+                currentLang = 'hi';
+                langbtn.innerText = "Hindi";
+
+            }else{
+                currentLang = 'en';
+                langbtn.innerText = "English";
+            }
+
+            if (window.speechSynthesis.speaking){
+                window.speechSynthesis.cancel();
+
+            }
+
+        }
+
+        function speakAIResult(){
+            const aiResult = document.querySelector(".AI_RESULT");
+            if (!aiResult) return;
+
+            if (window.speechSynthesis.speaking){
+                window.speechSynthesis.cancel();
+                return;
+            }
+            let rawText = aiResult.innerText || aiResult.textContent;
+            let cleanText = rawText
+            .replace(/[*#`_~]/g, '')
+            .replace(/https?:\/\/\S+/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+            if(!cleanText) return;
+            if ('speechSynthesis' in window){
+                window.speechSynthesis.cancel();
+
+                let utterance = new SpeechSynthesisUtterance(cleanText);
+
+                let voice = window.speechSynthesis.getVoices() || [];
+
+                let targetLangCode = (currentLang === 'hi') ? 'hi-IN': 'en-US';
+                let selectedVOice = voice.find(v => v.lang == targetLangCode) || voice.find(v => v.lang.includes(currentLang)) || voice.find(v => v.lang.includes('en-IN'));
+
+                if (selectedVOice){
+                    utterance.voice = selectedVOice;
+
+                }
+                utterance.lang = targetLangCode;
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+
+                window.speechSynthesis.speak(utterance);
+            }else{
+                alert("Apka brow speech nhi support kr rha hai ")
+            }
+
+        }
+
+        if ('speechSynthesis' in window){
+            window.speechSynthesis.onvoiceschanged = function (){
+                window.speechSynthesis.getVoices();
+            };
+        }
+    </script>
+</HTML>
