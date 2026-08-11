@@ -636,7 +636,7 @@
     </body>
     <script>
         let inpttt = document.getElementById("serach_engine2");
-        let PLaceholder = "Search on Zaid";
+        let PLaceholder = "Search on Subiiz";
         let index = 0;
         function typing(){
 
@@ -656,7 +656,7 @@
         typing();
 
         let inppttt = document.getElementById("serach_engine");
-        let PLacehpolder = "Search on Zaid";
+        let PLacehpolder = "Search on Subiiz";
         let indexp = 0;
         function typing1(){
 
@@ -753,91 +753,159 @@
 
         async function triggerSearch(event){
             if (event.key === 'Enter'){
-                let inppt = event.target.value.trim();
 
+                if (window.speechSynthesis.speaking){
+                    window.speechSynthesis.cancel();
+                }
+                let inppt = event.target.value.trim();
                 if(inppt !== ""){
                     document.querySelector("#serach_engine").value = inppt;
                     document.querySelector("#serach_engine2").value = inppt;
                     document.querySelector(".zaid").style.display = "none";
                     document.querySelector(".search-result-here").style.display = "flex";
-
-
+                    
                     let linkBox = document.querySelector(".linksss");
+                    
                     let aiBox = document.querySelector(".AI_RESULT");
+                    
                     aiBox.innerHTML = `<span class="fire_gradients">Thinking..........</span>`;
+                    
                     linkBox.innerHTML = `<h1 class="colofull_gradients">Finding Best Result..........</h1>`;
-                    try{
-                        let response = await fetch(`http://192.168.113.125:5000/search?q=${encodeURIComponent(inppt)}`);
-                        let data = await response.json();
-                        let AIresponse = await fetch(`http://192.168.113.125:5000/ai-response?q=${encodeURIComponent(inppt)}`)
+
+        
+                    // --- 1. AI RESPONSE FETCH (Independent) ---
+         
+                    try {
+         
+                        let AIresponse = await fetch(`http://192.168.113.125:5000/ai-response?q=${encodeURIComponent(inppt)}`);
+         
                         let AIdata = await AIresponse.json();
 
-                        linkBox.innerHTML = "";
-                        aiBox.innerHTML = "";
+         
+                        if (AIdata && AIdata.Reply) {
+         
+                            aiBox.innerHTML = `
+         
+                            <div style="display: flex;flex-direction: row;justify-content: flex-start;white-space: nowrap; align-items: center; margin-left: 0;">
+         
+                                <h2 style="font-size: 15px; color: black; font-weight: bolder; display: block; padding: 10px 20px 0 20px;margin-left: 20px;">SERACH RESULT</h2>
+         
+                                <span style="border: 0.5px solid #ccc;cursor:pointer;color:blue; height:22px;font-size: 11px; border-radius:25px;margin-left: 4px; margin-right: 4px; display: inline-flex; justify-content: center; align-items: center;box-sizing: border-box;padding: 0 10px;" onclick="toggle_eng_hindi()" id="toggle_eng_hindi" title="Speak To Eng And Hindi">English</span>
+         
+                                <span onclick="speakAIResult()" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-left: 2px; vertical-align: middle;" class="speaker_icon" title="Listen"><svg width="22" height="22" viewBox="0 0 24 24" fill="#00d2ff"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></span>
+         
+                                </div>
+         
+                                <span style="font-size: 12px; color: #1a73e8; font-weight: 600;margin-left: 50px;margin-bottom: 20px; margin-top: -6px; width: 160px;height: 20px;">AI OVERVIEW / TOP RESULT</span>
+         
+                                <div style="margin-left:20px; padding: 0 20px;" id="ai_text_speech">${AIdata.Reply}</div>
+         
+                                `;
+         
+                            } else {
+         
+                                aiBox.innerHTML = `
+         
+                                <div style="padding: 20px;">
+         
+                                    <h1 style="color: #d93025;margin: 0 0 8px 0;">NO AI ANSWER FOUND!!</h1>
+         
+                                    </div>`;
+         
+                                }
+         
+                            } catch (err) {
+         
+                                console.error("AI Fetch Error:", err);
+         
+                                aiBox.innerHTML = `
+         
+                                <div style="padding: 20px;">
+          
+                                    <h1 style="color: #d93025;margin: 0 0 8px 0;">AI BACKEND ERROR</h1>
+          
+                                    <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_blank" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+          
+                                    </div>`;
+          
+                                }
 
-                       if(data.results && data.results.length > 0){
-                        aiBox.innerHTML = `<div style="display: flex;flex-direction: row;justify-content: flex-start;white-space: nowrap; align-items: center; margin-left 0;">
-                            <h2 style="font-size: 15px; color: black; font-wight: bolder; display: block; padiing: 10px 20px 0 20px;margin-left: 20px;">SEARCH RESULT</h2>
-                            <span style="border: 0.5px solid #ccc;cursor:pointer;color:blue; height:22px;font-size: 11px; border-radius:25px;margin-left: 4px; margin-right: 4px; display: inline-flex; justify-content: center: align-items: center;box-sizing: border-box;padding: 0 10px;" onclick="toggle_eng_hindi()" id="toggle_eng_hindi"title="Speak To Eng And Hindi">English</span>
-                            <span onclick="speakAIResult()" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; margin-left: 2px; vertical-align: middle;"class="speaker_icon" title="Listen"><svg width="22" height="22" viewBox="0 0 24 24" fill="#00d2ff"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></span>
-                            </div>
-                        <span style="font-size: 12px; color: #1a73e8; font-weight: 6000;margin-left: 24px">AI OVERVIEW / TOP RESULT</span>
-                        `;
-                        linkBox.innerHTML = `<h1 style="color: black; font-wight: bolder; display: block; padiing: 10px 20px 0 20px">SEARCH RESULT</h1>
-                        <h3 style="color: black; font-wight: bolder; display: block; padding: 10px 20px 0 20px">LINKSS</h3>
-                        `;
-                        if (AIdata && AIdata.Reply){
-                         aiBox.innerHTML += `<div style="margin-left:60px">${AIdata.Reply}</div>`;
-                        }
-                        
-                        
-                        data.results.forEach((item, index)=>{ 
-                            linkBox.innerHTML += `
-                            <div style="padding: 10px 20px;">
-                                <a href="${item.href}" target="_self" style="font-size: 20px; color: #1z0dab; font-weight: bolder; display: block;margin-bottom: 8px">
-                                    ${index + 1}. ${item.title || 'Result'}
-                                </a>
-                                <p style="color: #3c4043; margin-bottom: 5px; font-size: 14px;">${item.body}</p>
-                            </div>
-                            `;
-                        });
-                       }else{
-                        linkBox.innerHTML = `
-                        <div style="padding: 20px;">
-                            <H1 style="color: #d93025;margin: 0 0 8px 0;">NO ANSWER FOUND!!</H1>
-                            <H3>SEARCH ON GOOGLE &#8595</H3>
-                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
-                        </div>
-                        `;
-                        aiBox.innerHTML = `
-                        <div style="padding: 20px;">
-                            <H1 style="color: #d93025;margin: 0 0 8px 0;">NO ANSWER FOUND!!</H1>
-                            <H3>SEARCH ON GOOGLE &#8595</H3>
-                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
-                        </div>
-                        `;
-                       }
+          
+                                // --- 2. SEARCH LINKS FETCH (Independent) ---
+          
+                                try {
+          
+                                    let response = await fetch(`http://192.168.113.125:5000/search?q=${encodeURIComponent(inppt)}`);
+          
+                                    let data = await response.json();
 
-                    } catch (err){
-                        linkBox.innerHTML = `
-                        <div style="padding: 20px;">
-                            <H1 style="color: #d93025;margin: 0 0 8px 0;">BACKEND ERROR<i style="font-size: 0px;">PLEASE ON THE PYTHON SERVER</i></H1>
-                            <H3>SEARCH ON GOOGLE &#8595</H3>
-                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
-                        </div>
-                        `;
-                        aiBox.innerHTML = `
-                        <div style="padding: 20px;">
-                            <H1 style="color: #d93025;margin: 0 0 8px 0;">BACKEND ERROR <i style="font-size: 0px;">PLEASE ON THE PYTHON SERVER</i></H1>
-                            <H3>SEARCH ON GOOGLE &#8595</H3>
-                            <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_self" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
-                        </div>
-                        `;
-                    }
-                    
-                }
-            }
-        }
+
+                
+                                    if(data && data.results && data.results.length > 0){
+         
+                                        linkBox.innerHTML = `
+         
+                                        <h1 style="color: black; font-weight: bolder; display: block; padding: 10px 20px 0 20px">SEARCH RESULTS</h1>
+         
+                                        `;
+         
+                                        data.results.forEach((item, index)=>{ 
+         
+                                            linkBox.innerHTML += `
+         
+                                            <div style="padding: 10px 20px;">
+         
+                                                <a href="${item.href}" target="_blank" style="font-size: 18px; color: #1a0dab; font-weight: bold; display: block;margin-bottom: 4px">
+         
+                                                    ${index + 1}. ${item.title || 'Result'}
+         
+                                                    </a>
+         
+                                                    <p style="color: #3c4043; margin-bottom: 5px; font-size: 14px;">${item.body}</p>
+         
+                                                    </div>
+         
+                                                    `;
+         
+                                                });
+         
+                                            } else {
+         
+                                                linkBox.innerHTML = `
+         
+                                                <div style="padding: 20px;">
+         
+                                                    <h1 style="color: #d93025;margin: 0 0 8px 0;">NO WEB LINKS FOUND!!</h1>
+         
+                                                    <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_blank" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+         
+                                                    </div>`;
+         
+                                                }
+         
+                                            } catch (err) {
+         
+                                                console.error("Search Fetch Error:", err);
+         
+                                                linkBox.innerHTML = `
+         
+                                                <div style="padding: 20px;">
+         
+                                                    <h1 style="color: #d93025;margin: 0 0 8px 0;">SEARCH BACKEND ERROR</h1>
+         
+                                                    <a href="https://www.google.com/search?q=${encodeURIComponent(inppt)}" target="_blank" style="color: blue; cursor: pointer;">TAP TO SEARCH ON GOOGLE</a>
+         
+                                                    </div>`;
+         
+                                                }
+
+   
+                                            }
+   
+                                        }
+    
+
+                                    }
 
         function trackerActi(actionName, detailsObj){
             fetch('/track',{
@@ -879,6 +947,10 @@
        
        
         function goHome(){
+
+            if (window.speechSynthesis.speaking){
+                window.speechSynthesis.cancel();
+            }
             document.querySelector(".search-result-here").style.display = "none";
             document.querySelector(".zaid").style.display = "flex";
             let aBox = document.querySelector(".AI_RESULT");
@@ -929,8 +1001,11 @@
 
         }
 
+        let currentUtteranceQueue = [];
+        let curentSenteceIdx = 0;
+
         function speakAIResult(){
-            const aiResult = document.querySelector(".AI_RESULT");
+            const aiResult = document.querySelector("#ai_text_speech");
             if (!aiResult) return;
 
             if (window.speechSynthesis.speaking){
@@ -945,35 +1020,74 @@
             .trim();
 
             if(!cleanText) return;
-            if ('speechSynthesis' in window){
+            if (!('speechSynthesis' in window)){
                 window.speechSynthesis.cancel();
-
-                let utterance = new SpeechSynthesisUtterance(cleanText);
-
-                let voice = window.speechSynthesis.getVoices() || [];
-
-                let targetLangCode = (currentLang === 'hi') ? 'hi-IN': 'en-US';
-                let selectedVOice = voice.find(v => v.lang == targetLangCode) || voice.find(v => v.lang.includes(currentLang)) || voice.find(v => v.lang.includes('en-IN'));
-
-                if (selectedVOice){
-                    utterance.voice = selectedVOice;
-
-                }
-                utterance.lang = targetLangCode;
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-
-                window.speechSynthesis.speak(utterance);
-            }else{
-                alert("Apka brow speech nhi support kr rha hai ")
+                alert("YOUR bROWSER NOT SUPPORT SPEECH");
+                return;
             }
 
+            let sentence = cleanText.replace(/([.!?\n])/g, "$1 |").split("|").filter(s => s.trim().length > 0);
+            currentUtteranceQueue = sentence;
+            curentSenteceIdx = 0;
+            playNextChunck();
         }
+
+        function playNextChunck(){ 
+
+            if (curentSenteceIdx >= currentUtteranceQueue.length){
+                window.speechUtteranceRef = null;
+                return;
+            }
+
+            let textChunck = currentUtteranceQueue[curentSenteceIdx].trim();
+            if(!textChunck){
+                curentSenteceIdx++;
+                playNextChunck();
+                return;
+            }
+
+            let utterance = new SpeechSynthesisUtterance(textChunck);
+            window.speechUtteranceRef = utterance;
+
+
+            let voice = window.speechSynthesis.getVoices() || [];
+
+            let targetLangCode = (currentLang === 'hi') ? 'hi-IN': 'en-US';
+            let selectedVOice = voice.find(v => v.lang == targetLangCode) || 
+            voice.find(v => v.lang.includes(currentLang)) || 
+            voice.find(v => v.lang.includes('en-IN'));
+
+            if (selectedVOice){
+               utterance.voice = selectedVOice;
+            }
+            utterance.lang = targetLangCode;
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            utterance.onend = function(){
+                curentSenteceIdx++;
+                playNextChunck();
+            }
+
+            if (window.speechSynthesis.paused){
+                window.speechSynthesis.resume();
+            }
+
+            window.speechSynthesis.speak(utterance);
+
+        }
+
 
         if ('speechSynthesis' in window){
             window.speechSynthesis.onvoiceschanged = function (){
                 window.speechSynthesis.getVoices();
             };
         }
+
+        window.addEventListener('beforeunload', () => {
+            if (window.speechSynthesis.speaking){
+                window.speechSynthesis.cancel();
+            }
+        });
     </script>
 </HTML>
