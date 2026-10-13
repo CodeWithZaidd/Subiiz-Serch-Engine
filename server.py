@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__, template_folder='.',static_url_path='', static_folder='.')
 CORS(app)
-
+ 
 @app.route('/track', methods=['POST'])
 def tracker():
     data = request.json
