@@ -3,6 +3,7 @@ import requests
 from flask_cors import CORS
 from bs4 import BeautifulSoup
 import re
+import os
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 CORS(app)
@@ -35,7 +36,7 @@ def clean_ai(html_text):
     html_text = re.sub(r'href\s*=\s*(["\'])javascript:.*?\1', 'href="#"', html_text, flags=re.IGNORECASE)
     return html_text
 
-GroqAi = "PASTE_HERE_YOUR_GROQ_AI_API"
+GroqAi = os.environ.get("GroqAi", "PASTE_HERE_YOUR_GROQ_AI_API")
 @app.route('/ai-response', methods=['GET'])
 def ai_response():
     query = request.args.get('q') or request.args.get('query', '')
