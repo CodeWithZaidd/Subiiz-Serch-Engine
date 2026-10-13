@@ -116,22 +116,32 @@ def search_engine():
 
     print(f"[LOG]: Search Found: {q}")
 
-    serach_result = []
+    search_result = []
 
-    #duckduck gooooooo
-    res = requests.post("https://html.duckduckgo.com/html/", data={'q' : q}, headers={'User-Agent': 'Mozilla/5.0'})
-    soup = BeautifulSoup(res.text, 'html.parser')
+    try:
+        # DuckDuckGo Request with timeout and proper User-Agent
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        res = requests.post("https://html.duckduckgo.com/html/", data={'q': q}, headers=headers, timeout=10)
+        
+        if res.status_code == 200:
+            soup = BeautifulSoup(res.text, 'html.parser')
 
-    for r in soup.find_all('div', class_='result'):
-        t = r.find('a', class_='result__a')
-        s = r.find('a', class_='result__snippet')
+            for r in soup.find_all('div', class_='result'):
+                t = r.find('a', class_='result__a')
+                s = r.find('a', class_='result__snippet')
 
-        if t:
-            serach_result.append({"title": t.get_text(strip=True),
-             "href": t.get('href', ''),
-              "body": s.get_text(strip=True) if s else ""})
+                if t:
+                    search_result.append({
+                        "title": t.get_text(strip=True),
+                        "href": t.get('href', ''),
+                        "body": s.get_text(strip=True) if s else ""
+                    })
+    except Exception as e:
+        print("SEARCH ERROR:", e)
 
-    return jsonify({"status": "SUCCESS", "results": serach_result[:15]})
+    return jsonify({"status": "SUCCESS", "results": search_result[:15]})
 
 if __name__ == "__main__":
     print("============================")
