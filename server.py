@@ -75,12 +75,13 @@ def ai_response():
 
         url = f"https://api.groq.com/openai/v1/chat/completions"
         payload = {
-            "model": "llama-3.3-70b-versatile",
-            "messages": [{"role": "user", "content": final_prompt}]
-        }
-        headers = {'Content-Type': 'application/json',
-        'Authorization': f'Bearer {GroqAi.strip()}'
-        }
+                "model": "openai/gpt-oss-120b",
+                "messages": [{"role": "user", "content": final_prompt}]
+            }
+        headers = {
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {key}'
+            }
         ERRR = "BHAI CHECK THE NETWORK OR INTERNET"
 
         response = requests.post(url, json=payload, headers=headers, timeout=10)
