@@ -69,39 +69,31 @@ def ai_response():
 )
     
 
-    #API REQ
-
+    # API REQ
     try:
-
-        url = f"https://api.groq.com/openai/v1/chat/completions"
+        url = "https://api.groq.com/openai/v1/chat/completions"
         payload = {
-                "model": "openai/gpt-oss-120b",
-                "messages": [{"role": "user", "content": final_prompt}]
-            }
+            "model": "llama-3.1-70b-versatile",
+            "messages": [{"role": "user", "content": final_prompt}]
+        }
         headers = {
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {key}'
-            }
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {GroqAi.strip()}'
+        }
         ERRR = "BHAI CHECK THE NETWORK OR INTERNET"
 
         response = requests.post(url, json=payload, headers=headers, timeout=10)
         res_data = response.json()
 
-        #gemini
         if response.status_code == 200:
             ai_text = res_data['choices'][0]['message']['content']
             safe_ai_text = clean_ai(ai_text)
-
-            #yaha se *)(&6%$#@!) aise cheez ko br main bdal de
             return jsonify({"Reply": safe_ai_text})
-
         else:
             print("===========================================")
             print("GroqAI:", res_data)
             print("============================================")
-            err_msg = res_data.get('error',{}).get('message', 'Unknown Google ERROR')
             return jsonify({"Error": ERRR}), 500
-
 
     except Exception as e:
         print("AI ERROR:", e)
