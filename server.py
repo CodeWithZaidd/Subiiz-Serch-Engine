@@ -73,7 +73,7 @@ def ai_response():
     try:
         url = "https://api.groq.com/openai/v1/chat/completions"
         payload = {
-            "model": "",
+            "model": "openai/gpt-oss-120b",
             "messages": [{"role": "user", "content": final_prompt}]
         }
         headers = {
