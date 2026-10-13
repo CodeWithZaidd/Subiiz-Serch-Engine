@@ -112,27 +112,27 @@ def search_engine():
     search_result = []
 
     try:
-        # DuckDuckGo GET Request with realistic browser headers
+        # Bing Search Scraper (Stable on Render free tier)
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5'
         }
-        url = f"https://html.duckduckgo.com/html/?q={requests.utils.quote(q)}"
+        url = f"https://www.bing.com/search?q={requests.utils.quote(q)}"
         res = requests.get(url, headers=headers, timeout=10)
         
         if res.status_code == 200:
             soup = BeautifulSoup(res.text, 'html.parser')
 
-            for r in soup.find_all('div', class_='result'):
-                t = r.find('a', class_='result__a')
-                s = r.find('a', class_='result__snippet')
+            for r in soup.find_all('li', class_='b_algo'):
+                t = r.find('a')
+                p = r.find('p') or r.find('div', class_='b_caption')
 
-                if t:
+                if t and t.get('href'):
                     search_result.append({
                         "title": t.get_text(strip=True),
                         "href": t.get('href', ''),
-                        "body": s.get_text(strip=True) if s else ""
+                        "body": p.get_text(strip=True) if p else ""
                     })
     except Exception as e:
         print("SEARCH ERROR:", e)
