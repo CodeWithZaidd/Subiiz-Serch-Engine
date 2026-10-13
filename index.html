@@ -777,7 +777,7 @@
          
                     try {
          
-                        let AIresponse = await fetch(`http://192.168.113.125:5000/ai-response?q=${encodeURIComponent(inppt)}`);
+                        let AIresponse = await fetch(`/ai-response?q=${encodeURIComponent(inppt)}`);
          
                         let AIdata = await AIresponse.json();
 
@@ -835,7 +835,7 @@
           
                                 try {
           
-                                    let response = await fetch(`http://192.168.113.125:5000/search?q=${encodeURIComponent(inppt)}`);
+                                    let response = await fetch(`/search?q=${encodeURIComponent(inppt)}`);
           
                                     let data = await response.json();
 
