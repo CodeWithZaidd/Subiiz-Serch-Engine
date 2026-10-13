@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 import os
 
-app = Flask(__name__, static_url_path='', static_folder='.')
+app = Flask(__name__, template_folder='.',static_url_path='', static_folder='.')
 CORS(app)
 
 @app.route('/track', methods=['POST'])
