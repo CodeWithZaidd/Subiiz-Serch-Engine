@@ -17,7 +17,7 @@ def tracker():
     return jsonify({'status': "SUCCESS"})
 
 @app.route('/')
-def home():
+def home(): 
     return render_template('index.html')
 
 def clean_ai(html_text):
