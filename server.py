@@ -112,11 +112,14 @@ def search_engine():
     search_result = []
 
     try:
-        # DuckDuckGo Request with timeout and proper User-Agent
+        # DuckDuckGo GET Request with realistic browser headers
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5'
         }
-        res = requests.post("https://html.duckduckgo.com/html/", data={'q': q}, headers=headers, timeout=10)
+        url = f"https://html.duckduckgo.com/html/?q={requests.utils.quote(q)}"
+        res = requests.get(url, headers=headers, timeout=10)
         
         if res.status_code == 200:
             soup = BeautifulSoup(res.text, 'html.parser')
