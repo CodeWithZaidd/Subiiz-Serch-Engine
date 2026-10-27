@@ -3,3 +3,4 @@ flask-cors
 requests
 beautifulsoup4
 gunicorn
+certifi>=2026.10.19
